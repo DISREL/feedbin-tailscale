@@ -1,0 +1,36 @@
+name: feedbin-tailscale
+services:
+    feedbin-backend:
+        container_name: feedbin-backend
+        privileged: true
+        environment:
+            - TS_TAILNAME=${TS_TAILNAME}
+            - TS_HOSTNAME=${TS_HOSTNAME}
+        depends_on:
+            - feedbin-tailscale
+        ports:
+            - 80:80/tcp
+            - 443:443/tcp
+        cgroup: host
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup
+            - ./feedbin-backend:/data
+        devices:
+            - /dev/fuse
+        stop_signal: SIGRTMIN+3
+        image: ghcr.io/DISREL/feedbin:edge
+        network_mode: service:feedbin-frontend
+    feedbin-frontend:
+        container_name: feedbin-frontend
+        image: tailscale/tailscale:latest
+        hostname: feedbin
+        environment:
+            - TS_AUTHKEY=${TS_AUTHKEY}
+            - TS_EXTRA_ARGS=--advertise-tags=tag:container # Check Tailscale documentation to add tags for ACL Management.
+        volumes:
+            - /dev/net/tun:/dev/net/tun
+            - ./feedbin-frontend:/var/lib
+        cap_add:
+            - NET_ADMIN
+            - NET_RAW
+        restart: unless-stopped

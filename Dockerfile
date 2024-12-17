@@ -19,6 +19,9 @@ RUN apt-get update \
  && curl -fsSL https://github.com/esimov/pigo/releases/download/$PIGO_TAG_NAME/$PIGO_DIR.tar.gz | tar -vxzC /opt \
  && ln -s /opt/$PIGO_DIR/pigo /usr/local/bin/pigo
 
+RUN chmod +x /usr/bin/entrypoint.sh
+
 WORKDIR /opt/feedbin/feedbin
 
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 CMD ["bundle", "exec", "foreman", "start"]
