@@ -22,7 +22,7 @@ RUN apt-get update \
 WORKDIR /opt/feedbin/feedbin
 
 ADD entrypoint.sh /
-RUN chmod +x entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bundle", "exec", "foreman", "start"]
