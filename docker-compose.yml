@@ -5,8 +5,8 @@ networks:
 services:
     feedbin-backend:
         container_name: feedbin-backend
-        image: ghcr.io/disrel/feedbin-tailscale:edge
-        hostname: feedbin-backend
+        image: ghcr.io/ntkme/feedbin:edge
+        hostname: dmz.ghoul-komodo.ts.net
         privileged: true
         environment:
             - TS_TAILNAME=${TS_TAILNAME}
@@ -18,7 +18,7 @@ services:
             - 443:443/tcp
         volumes:
             - /sys/fs/cgroup:/sys/fs/cgroup
-            - ./feedbin-backend:/data
+            - /var/lib/feedbin:/data
         devices:
             - /dev/fuse
 #        depends_on:

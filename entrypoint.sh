@@ -11,3 +11,5 @@ TARGET_FILE="/etc/systemd/system/feedbin-init.service"
 
 # Replace the placeholder ${TS_HOSTNAME}.${TS_TAILNAME} in the target file
 sed -i "s/\${TS_HOSTNAME}\.\${TS_TAILNAME}/$TS_HOSTNAME.$TS_TAILNAME/g" "$TARGET_FILE"
+
+exec "$@"
