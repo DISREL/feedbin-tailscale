@@ -1,25 +1,29 @@
 name: feedbin-tailscale
+networks:
+    feedbin-tailscale:
+        name: feedbin-tailscale
 services:
     feedbin-backend:
         container_name: feedbin-backend
+        image: ghcr.io/disrel/feedbin-tailscale:edge
+        hostname: feedbin-backend
         privileged: true
         environment:
             - TS_TAILNAME=${TS_TAILNAME}
             - TS_HOSTNAME=${TS_HOSTNAME}
-        depends_on:
+        networks:
             - feedbin-tailscale
         ports:
             - 80:80/tcp
             - 443:443/tcp
-        cgroup: host
         volumes:
             - /sys/fs/cgroup:/sys/fs/cgroup
             - ./feedbin-backend:/data
         devices:
             - /dev/fuse
-        stop_signal: SIGRTMIN+3
-        image: ghcr.io/DISREL/feedbin:edge
-        network_mode: service:feedbin-frontend
+        depends_on:
+            - feedbin-frontend
+        cgroup: host
     feedbin-frontend:
         container_name: feedbin-frontend
         image: tailscale/tailscale:latest
