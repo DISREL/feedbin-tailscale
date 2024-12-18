@@ -19,8 +19,6 @@ RUN podman pull docker.io/library/caddy:2-alpine \
 
 ADD etc /etc
 ADD usr /usr
-RUN chmod +x /usr/bin/entrypoint.sh # Entrypoint for changing hostname in feedbin config
+RUN chmod +x /usr/bin/hostname.sh # For changing hostname in feedbin config
 
 VOLUME ["/data"]
-
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]

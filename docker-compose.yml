@@ -21,20 +21,20 @@ services:
             - ./feedbin-backend:/data
         devices:
             - /dev/fuse
-        depends_on:
-            - feedbin-frontend
+#        depends_on:
+#            - feedbin-frontend
         cgroup: host
-    feedbin-frontend:
-        container_name: feedbin-frontend
-        image: tailscale/tailscale:latest
-        hostname: feedbin
-        environment:
-            - TS_AUTHKEY=${TS_AUTHKEY}
-            - TS_EXTRA_ARGS=--advertise-tags=tag:container # Check Tailscale documentation to add tags for ACL Management.
-        volumes:
-            - /dev/net/tun:/dev/net/tun
-            - ./feedbin-frontend:/var/lib
-        cap_add:
-            - NET_ADMIN
-            - NET_RAW
-        restart: unless-stopped
+#    feedbin-frontend:
+#        container_name: feedbin-frontend
+#        image: tailscale/tailscale:latest
+#        hostname: feedbin
+#        environment:
+#            - TS_AUTHKEY=${TS_AUTHKEY}
+#            - TS_EXTRA_ARGS=--advertise-tags=tag:container # Check Tailscale documentation to add tags for ACL Management.
+#        volumes:
+#            - /dev/net/tun:/dev/net/tun
+#            - ./feedbin-frontend:/var/lib
+#        cap_add:
+#            - NET_ADMIN
+#            - NET_RAW
+#        restart: unless-stopped
