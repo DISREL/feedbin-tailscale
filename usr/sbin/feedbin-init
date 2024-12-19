@@ -60,14 +60,14 @@ EXTRACT_SECRET=$(secure_random)
 RACK_ENV=production
 RAILS_ENV=production
 
-FEEDBIN_HOST=feedbin-backend,api.feedbin.com
+FEEDBIN_HOST=$1
 EXTRACT_HOST=127.0.0.1
 ENTRY_IMAGE_HOST=127.0.0.1:9000
 FAVICON_HOST=127.0.0.1:9000
 
-FEEDBIN_URL=http://$1
+FEEDBIN_URL=https://$1
 DEFAULT_URL_OPTIONS_HOST=$1
-PUSH_URL=http://$1
+PUSH_URL=https://$1
 
 AWS_S3_BUCKET=feedbin
 
