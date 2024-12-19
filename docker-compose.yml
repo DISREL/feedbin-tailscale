@@ -16,8 +16,9 @@ services:
         networks:
             - feedbin-ts
         expose:
-            - 80/tcp
-            - 443/tcp
+            - 3000/tcp
+            - 3001/tcp
+            - 3002/tcp
         volumes:
             - /sys/fs/cgroup:/sys/fs/cgroup
             - ./feedbin-backend:/data
@@ -35,7 +36,7 @@ services:
             - feedbin-ts
         expose:
             - 80
-            - 443
+#            - 443
         volumes:
             - /dev/net/tun:/dev/net/tun
             - ./tailscale:/var/lib/tailscale
@@ -51,5 +52,5 @@ services:
             NC_DOMAIN: ${TS_HOSTNAME}.${TS_TAILNAME}
         volumes:
             - ./feedbin-frontend/Caddyfile:/etc/caddy/Caddyfile
-            - ./feedbin-frontend/certs:/etc/caddy/certs
+#            - ./feedbin-frontend/certs:/etc/caddy/certs
         network_mode: service:tailscale

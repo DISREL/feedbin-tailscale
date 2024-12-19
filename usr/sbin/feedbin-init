@@ -49,9 +49,7 @@ REDIS_URL=redis://127.0.0.1:6379
 
 SECRET_KEY_BASE=$(secure_random)
 
-CAMO_KEY=$PRIVACY_KEY
-
-AWS_S3_ENDPOINT=http://minio.$1
+AWS_S3_ENDPOINT=http://127.0.0.1:9000
 AWS_ACCESS_KEY_ID=$MINIO_ACCESS_KEY
 AWS_SECRET_ACCESS_KEY=$MINIO_SECRET_KEY
 AWS_S3_PATH_STYLE=true
@@ -62,11 +60,10 @@ EXTRACT_SECRET=$(secure_random)
 RACK_ENV=production
 RAILS_ENV=production
 
-FEEDBIN_HOST=$1,api.feedbin.com
-EXTRACT_HOST=$1
-CAMO_HOST=http://privacy-please.$1
-ENTRY_IMAGE_HOST=minio.$1
-FAVICON_HOST=minio.$1
+FEEDBIN_HOST=feedbin-backend,api.feedbin.com
+EXTRACT_HOST=feedbin-backend
+ENTRY_IMAGE_HOST=minio.feedbin-backend
+FAVICON_HOST=minio.feedbin-backend
 
 FEEDBIN_URL=http://$1
 DEFAULT_URL_OPTIONS_HOST=$1
