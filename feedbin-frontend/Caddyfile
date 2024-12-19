@@ -1,8 +1,8 @@
-http://{$NC_DOMAIN} {
+https://{$NC_DOMAIN} {
 	encode zstd gzip
 	reverse_proxy http://feedbin-backend:3000
         reverse_proxy /parser/* http://feedbin-backend:3001
-        #tls /etc/caddy/certs/caddy.pem /etc/caddy/certs/caddy.key
+        tls /etc/caddy/certs/caddy.pem /etc/caddy/certs/caddy.key
 
 	@signup {
 		method POST
