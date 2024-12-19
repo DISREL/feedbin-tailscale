@@ -1,3 +1,4 @@
 .env
 feedbin-backend/
-feedbin-frontend/
+feedbin-frontend/certs/
+tailscale/

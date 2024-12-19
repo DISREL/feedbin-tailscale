@@ -1,40 +1,55 @@
 name: feedbin-tailscale
 networks:
-    feedbin-tailscale:
-        name: feedbin-tailscale
+    feedbin-ts:
+        name: feedbin-ts
 services:
     feedbin-backend:
         container_name: feedbin-backend
-        image: ghcr.io/ntkme/feedbin:edge
-        hostname: dmz.ghoul-komodo.ts.net
+        image: ghcr.io/disrel/feedbin-tailscale:edge
+#        image: ghcr.io/ntkme/feedbin:edge
+#        hostname: ${TS_HOSTNAME}.${TS_TAILNAME}
+        hostname: feedbin-backend
         privileged: true
         environment:
             - TS_TAILNAME=${TS_TAILNAME}
             - TS_HOSTNAME=${TS_HOSTNAME}
         networks:
-            - feedbin-tailscale
-        ports:
-            - 80:80/tcp
-            - 443:443/tcp
+            - feedbin-ts
+        expose:
+            - 80/tcp
+            - 443/tcp
         volumes:
             - /sys/fs/cgroup:/sys/fs/cgroup
-            - /var/lib/feedbin:/data
+            - ./feedbin-backend:/data
         devices:
             - /dev/fuse
-#        depends_on:
-#            - feedbin-frontend
         cgroup: host
-#    feedbin-frontend:
-#        container_name: feedbin-frontend
-#        image: tailscale/tailscale:latest
-#        hostname: feedbin
-#        environment:
-#            - TS_AUTHKEY=${TS_AUTHKEY}
-#            - TS_EXTRA_ARGS=--advertise-tags=tag:container # Check Tailscale documentation to add tags for ACL Management.
-#        volumes:
-#            - /dev/net/tun:/dev/net/tun
-#            - ./feedbin-frontend:/var/lib
-#        cap_add:
-#            - NET_ADMIN
-#            - NET_RAW
-#        restart: unless-stopped
+    tailscale:
+        container_name: tailscale
+        image: tailscale/tailscale:latest
+        hostname: ${TS_HOSTNAME}
+        environment:
+            - TS_AUTHKEY=${TS_AUTHKEY}
+            - TS_EXTRA_ARGS=--advertise-tags=tag:container # Check Tailscale documentation to add tags for ACL Management.
+        networks:
+            - feedbin-ts
+        expose:
+            - 80
+            - 443
+        volumes:
+            - /dev/net/tun:/dev/net/tun
+            - ./tailscale:/var/lib/tailscale
+        cap_add:
+            - NET_ADMIN
+            - NET_RAW
+        init: true
+        restart: unless-stopped
+    feedbin-frontend:
+        container_name: feedbin-frontend
+        image: caddy:latest
+        environment:
+            NC_DOMAIN: ${TS_HOSTNAME}.${TS_TAILNAME}
+        volumes:
+            - ./feedbin-frontend/Caddyfile:/etc/caddy/Caddyfile
+            - ./feedbin-frontend/certs:/etc/caddy/certs
+        network_mode: service:tailscale

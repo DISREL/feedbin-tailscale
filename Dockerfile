@@ -9,8 +9,6 @@ RUN apt-get update \
  && npm install -g yarn \
  && cd /opt/feedbin/feedbin \
  && bundle install \
- && cd /opt/feedbin/privacy-please \
- && bundle install \
  && cd /opt/feedbin/extract \
  && npm ci \
  && mkdir users \
@@ -21,8 +19,4 @@ RUN apt-get update \
 
 WORKDIR /opt/feedbin/feedbin
 
-ADD entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bundle", "exec", "foreman", "start"]
