@@ -61,9 +61,9 @@ RACK_ENV=production
 RAILS_ENV=production
 
 FEEDBIN_HOST=feedbin-backend,api.feedbin.com
-EXTRACT_HOST=feedbin-backend
-ENTRY_IMAGE_HOST=minio.feedbin-backend
-FAVICON_HOST=minio.feedbin-backend
+EXTRACT_HOST=127.0.0.1
+ENTRY_IMAGE_HOST=127.0.0.1:9000
+FAVICON_HOST=127.0.0.1:9000
 
 FEEDBIN_URL=http://$1
 DEFAULT_URL_OPTIONS_HOST=$1
