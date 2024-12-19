@@ -6,7 +6,7 @@ services:
     feedbin-backend:
         container_name: feedbin-backend
         image: ghcr.io/disrel/feedbin-tailscale:edge
-        hostname: ${TS_HOSTNAME}:${TS_TAILNAME}
+        hostname: ${TS_HOSTNAME}.${TS_TAILNAME}
         privileged: true
         networks:
             - feedbin-ts
@@ -46,5 +46,6 @@ services:
             NC_DOMAIN: ${TS_HOSTNAME}.${TS_TAILNAME}
         volumes:
             - ./feedbin-frontend/Caddyfile:/etc/caddy/Caddyfile
-            - ./feedbin-frontend/certs:/etc/caddy/certs
+            - ./tailscale/caddy.pem:/etc/caddy/certs/caddy.pem
+            - ./tailscale/caddy.key:/etc/caddy/certs/caddy.key
         network_mode: service:tailscale

@@ -29,7 +29,7 @@ xpack.security.enabled=false
 EOF
 
 configure /data/minio/.env <<EOF
-MINIO_HOST=http://127.0.0.1:9000
+MINIO_HOST=http://localhost
 MINIO_ACCESS_KEY=$(secure_random)
 MINIO_SECRET_KEY=$(secure_random)
 EOF
