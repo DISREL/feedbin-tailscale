@@ -28,9 +28,6 @@ services:
             - TS_EXTRA_ARGS=--advertise-tags=tag:container # Check Tailscale documentation to add tags for ACL Management.
         networks:
             - feedbin-ts
-        expose:
-            - 80
-            - 443
         volumes:
             - /dev/net/tun:/dev/net/tun
             - ./tailscale:/var/lib/tailscale
