@@ -18,7 +18,6 @@ services:
         expose:
             - 3000/tcp
             - 3001/tcp
-            - 3002/tcp
         volumes:
             - /sys/fs/cgroup:/sys/fs/cgroup
             - ./feedbin-backend:/data

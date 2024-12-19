@@ -10,20 +10,3 @@ http://{$NC_DOMAIN} {
 	}
 	#respond @signup 403
 }
-
-http://api.{$NC_DOMAIN} {
-	encode zstd gzip
-	reverse_proxy http://127.0.0.1:3000 {
-		header_up Host api.feedbin.com
-	}
-}
-
-http://minio.{$NC_DOMAIN} {
-	encode zstd gzip
-	reverse_proxy $MINIO_HOST
-}
-
-http://privacy-please.{$NC_DOMAIN} {
-	encode zstd gzip
-	reverse_proxy http://127.0.0.1:3002
-}
