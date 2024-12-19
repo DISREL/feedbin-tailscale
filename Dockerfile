@@ -4,14 +4,18 @@ COPY vendor/github.com /opt
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends libidn11-dev libvips42 nodejs npm postgresql-client \
- && rm -rf /var/lib/apt/lists/* \
- && gem update --system \
- && npm install -g yarn \
- && cd /opt/feedbin/feedbin \
- && bundle install \
- && cd /opt/feedbin/extract \
- && npm ci \
- && mkdir users \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN gem update --system \
+ && npm install -g yarn
+
+RUN cd /opt/feedbin/feedbin \
+ && bundle install
+
+RUN cd /opt/feedbin/extract \
+ && npm ci
+
+RUN mkdir users \
  && PIGO_TAG_NAME=$(basename "$(curl -fsSLo /dev/null  --write-out "%{url_effective}\n" https://github.com/esimov/pigo/releases/latest)") \
  && PIGO_DIR=pigo-$(echo "$PIGO_TAG_NAME" | tr -d v)-linux-amd64 \
  && curl -fsSL https://github.com/esimov/pigo/releases/download/$PIGO_TAG_NAME/$PIGO_DIR.tar.gz | tar -vxzC /opt \
